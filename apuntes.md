@@ -352,80 +352,104 @@ Sistemas complejos compuestos por multitud de agentes con reglas de comportamien
 - **Evolución**: Agentes que aprenden (aprendizaje no supervisado). El algoritmo refina y descubre de manera autónoma las reglas óptimas del espacio de soluciones guiándose exclusivamente por la función de fitness.
 - **Interacción**: Sistemas multiagente de colaboración coordinada (en hormigas y enjambres) donde la comunicación es indirecta y se realiza por señales mediante la alteración del medio (rastros de feromonas).
 
-## **Tema 5 Aprendizaje Automatico (Machine Learning)**
+## Tema 5: Aprendizaje Automático (Machine Learning)
 
-### 5.1 Intro y Aprendizaje supervisado
-- **Aprendizaje**: Proceso de adquirir conocimiento o aptitudes.
-- **Automatico**: Mecanismo o aparato que funciona total o parcialmente por si solo.
-- **ML Agente**: Son agentes que aprenden y se adaptan a entornos dinamicos. El ML los permite predecir el comportamiento de un sistema a futuro.
-Como en el aprendizaje animal(Humano) ML requiere capacidad de abstraccion de pequeños detalles y memoria. Aunque la abstracción incluya sesgos, estos son necesarios para poder ser utiles en ejemplos no entrenados.
-- **Sesgo**: Modelo de simplificacion de un problema introduciendo un "posible" error.
-- **Varianza**: No introduce sesgos en el modelo. Realmente no nos beneficia la Sobre Adaptacion.
-- **Tipos de Aprendizaje(Entrenamiento)**
-    - Supervisado: Los ejemplos deben contener la solucion.
-    - No Supervisado: Ejemplos sin info del resultado esperado.
-    - Por Refuerzo: Retroalimentacion del entorno. Prueba y error. 
+### 5.1 Preparación y Preprocesamiento de Datos
+El tratamiento previo de los datos es un requisito indispensable antes de la aplicación de cualquier modelo predictivo, especialmente en problemas de clasificación tabular.
 
-- **Tipos de Problemas**
-    - Clasificacion: Categorizar un elemento. Salida discreta.
-    - Regresion: Estimar la salida con la mayor accuaricy posible. Salida continua.
-    - Agrupamiento: Intentar conocer el numero y el tipo de clases.
-    - Reduccion de Dimensiones: Extraer caracteristicas relevantes.
-    - Asociacion: Establecer relaciones entre variables.
-    - Generraciond e Contenido: Genera en base a datos del entrenamiento.
+- **Selección de Características (Feature Selection):** Consiste en descartar lógicamente aquellos atributos que no presentan correlación con la clase a predecir, reduciendo el ruido y la carga computacional.
+- **Codificación de Variables Categóricas:** Los algoritmos requieren entradas numéricas.
+  - **One-Hot Encoding:** Aplicable a variables nominales que no poseen un orden jerárquico inherente (ej. género, país).
+  - **Label Encoding:** Aplicable a variables ordinales que sí poseen una jerarquía clara (ej. nivel de actividad física: baja=0, media=1, alta=2).
+- **Gestión del Ruido y Normalización:** Estandarizar o normalizar los datos es obligatorio para que todas las variables tengan el mismo peso matemático, especialmente si se van a utilizar Redes Neuronales o métodos basados en el cálculo de distancias.
 
-#### Aprendizaje Supervisado
-- Pretende deducir una **funcion** que dada la entrada se obtenga la solucion deseada.
-- Cada instancia de entrenamiento debe ser un vector de entrada y su salida esperada.
-- La entrada **matriz** n*m. N: numero de instancias, M: Numero de atributos.
-- Los atributos pueden ser cuantitativos (Numericos) o cualitativos (Categoricos).
-- **Correcta Representacion de Datos**
-    - Evitar ruido (datos erroneos o atributos inutiles)
-    - Suficientes ejemplos
-    - Misma escala para todas las entradas de cada atributo
-    - Discretizacion de atrb num
-    - Categoricos a binarrio tantos atributos como categorias y marcando el positivo. **One-Hot Encoding** (Codigo en Anexo II).
-- **Testing**
-    - Dividir el conjunto de datos en **Entrenamiento y Prueba**.
-    - Posible conjunto de Validacion (Durante el entrenamiento para mantener capacidad de generalizacion)
+### 5.2 Aprendizaje Supervisado
+Aplicable cuando se dispone de un histórico de datos etiquetados (se conoce la solución previa) con el fin de predecir valores continuos (regresión) o categorías (clasificación).
 
-#### Tecnicas de Aprendizaje Supervisado
-- Posibles modelos e implementaciones (Ver en **Tema 5.1.3**)
+- **Modelos de Caja Blanca (Árboles de Decisión y KNN):** Algoritmos interpretables donde es posible trazar la lógica matemática exacta de la decisión. Obligatorios en entornos críticos o auditables (medicina, finanzas) que exigen explicabilidad legal o funcional.
+- **Redes Neuronales Artificiales / Perceptrón Multicapa (MLP):** Modelos inspirados en la biología (caja negra). Su arquitectura de pesos distribuidos ofrece una altísima tolerancia a fallos. Son la elección óptima cuando existe la certeza o sospecha de ruido, datos erróneos o sensores defectuosos en la entrada.
+- **Support Vector Machines (SVM):** Modelos matemáticos que buscan el hiperplano óptimo de separación. Altamente eficaces en espacios de gran dimensionalidad donde el número de características supera al número de muestras.
+- **Random Forest (Bosques Aleatorios):** Método de conjunto (ensemble) que combina las predicciones de múltiples árboles de decisión entrenados sobre distintos subconjuntos de datos. Presenta alta precisión y gran resistencia al sobreajuste, siendo un estándar en la resolución de problemas tabulares.
 
-### 5.2 Redes Neuronales
+### 5.3 Aprendizaje No Supervisado
+Aplicable cuando se dispone de datos brutos sin etiquetar. El objetivo es descubrir estructuras subyacentes o patrones ocultos de forma autónoma.
 
+- **Clustering (K-Means y Jerárquico):** Agrupa los elementos basándose en la similitud geométrica de sus características. Es la solución estándar cuando se pide clasificar elementos sin conocer las categorías previas.
+- **Reducción de Dimensionalidad (PCA):** Algoritmos diseñados para simplificar conjuntos de datos masivos eliminando información redundante, paso previo habitual para evitar el colapso por exceso de variables.
+
+### 5.4 Aprendizaje Profundo (Deep Learning)
+Subcampo necesario cuando el volumen de datos es inmenso y su naturaleza es no estructurada o multimedia (vídeo, imagen, audio, lenguaje natural).
+
+- **Pipeline estándar multimedia:**
+  1. **Normalización de entrada:** Estandarizar resoluciones o longitudes temporales.
+  2. **Extracción de características:** Reducir la dimensionalidad mediante algoritmos que extraigan patrones de forma automática.
+  3. **Clasificación final:** Capas densas que emiten la predicción.
+- **Redes Neuronales Convolucionales (CNN):** Imprescindibles para el procesamiento espacial (imágenes o frames individuales). Extraen características visuales (texturas, bordes) mediante la aplicación jerárquica de filtros.
+- **Redes Neuronales Recurrentes (RNN y LSTM):** Diseñadas para procesar datos secuenciales o temporales. La variante LSTM (Long Short-Term Memory) soluciona el problema del desvanecimiento del gradiente, evitando que la red olvide información crucial del inicio de la secuencia.
+- **Autoencoders:** Redes utilizadas para comprimir la información copiando la entrada en la salida. Útiles para la reducción avanzada de dimensionalidad o la limpieza de ruido en imágenes.
+
+### 5.5 Aprendizaje por Refuerzo
+Aplicable en entornos dinámicos y desconocidos donde no existe un dataset previo. El modelo aprende "online" mediante la interacción.
+
+- **Q-Learning:** El agente explora el entorno mediante prueba y error, aprendiendo políticas de actuación óptimas con el objetivo de maximizar una función de recompensas a largo plazo. Se utiliza habitualmente en control robótico o agentes virtuales en videojuegos.
+
+### 5.6 Criterios de Selección de Algoritmos (Guía de Resolución de Casos)
+Para el diseño de sistemas inteligentes en casos prácticos, la elección del algoritmo viene determinada por las restricciones del entorno:
+
+- **Restricción de Explicabilidad (Auditoría/Responsabilidad):** Exige Modelos de Caja Blanca (Árboles de Decisión).
+- **Restricción de Ruido o Inconsistencia de Datos:** Exige modelos robustos y tolerantes a fallos (Perceptrón Multicapa / Redes Neuronales).
+- **Restricción de Ausencia de Etiquetas:** Exige aprendizaje no supervisado por agrupación geométrica (K-Means).
+- **Restricción de Datos Complejos (Multimedia):** Exige arquitecturas profundas (CNN para espacio, LSTM para tiempo).
 
 
 ## **Anexo I: Índice de Consulta Rápida para el Examen**
 
-* **Clasificar la relación o el tipo de colaboración entre robots, países o agentes** ==> Consultar 2.3
-* **Definir el REAS o las 6 propiedades básicas del entorno de un puzle o robot** ==> Consultar 2.1
-* **Elegir el tipo de control o arquitectura de software interna de un agente** ==> Consultar 2.2
-* **Formalizar las 4 constantes de un puzle (Estado Inicial, Objetivo, Operadores, Coste)** ==> Consultar 3.1
-* **Diseñar, proponer o demostrar si una función heurística para A\* es admisible** ==> Consultar 3.3
-* **Resolver un problema combinatorio o de asignación gigante (ej: libros en estantes)** ==> Consultar 4.1 y 3.4
-* **Controlar o corregir la generación de individuos no válidos que rompen las reglas** ==> Consultar 4.1
-* **Optimizar un problema físico o matemático basado en valores continuos o reales** ==> Consultar 4.2
-* **Modelar interacciones simples basadas en feromonas u olvido de rutas subóptimas** ==> Consultar 4.3
-* **Adaptar un puzle ante un rival por turnos (Suma cero / Minimax / Poda Alfa-Beta)** ==> Consultar 3.5
-* **Justificar la elección de IA Simbólica (Top-Down) vs IA Subsimbólica (Bottom-Up)** ==> Consultar 1.2
-* **Clasificar un algoritmo genético, evolutivo o bio-inspirado como tipo de agente** ==> Consultar 4.4
+- **Clasificar la relación o el tipo de colaboración entre robots, países o agentes** ==> Consultar 2.3
+- **Definir el REAS o las 6 propiedades básicas del entorno de un puzle o robot** ==> Consultar 2.1
+- **Elegir el tipo de control o arquitectura de software interna de un agente** ==> Consultar 2.2
+- **Formalizar las 4 constantes de un puzle (Estado Inicial, Objetivo, Operadores, Coste)** ==> Consultar 3.1
+- **Diseñar, proponer o demostrar si una función heurística para A\* es admisible** ==> Consultar 3.3
+- **Resolver un problema combinatorio o de asignación gigante (ej: libros en estantes)** ==> Consultar 4.1 y 3.4
+- **Controlar o corregir la generación de individuos no válidos que rompen las reglas** ==> Consultar 4.1
+- **Optimizar un problema físico o matemático basado en valores continuos o reales** ==> Consultar 4.2
+- **Modelar interacciones simples basadas en feromonas u olvido de rutas subóptimas** ==> Consultar 4.3
+- **Adaptar un puzle ante un rival por turnos (Suma cero / Minimax / Poda Alfa-Beta)** ==> Consultar 3.5
+- **Justificar la elección de IA Simbólica (Top-Down) vs IA Subsimbólica (Bottom-Up)** ==> Consultar 1.2
+- **Clasificar un algoritmo genético, evolutivo o bio-inspirado como tipo de agente** ==> Consultar 4.4
 
 ## **Anexo II: Codificar**
 
-* **One-Hot Encoding**
+- **One-Hot Encoding**
 ```python
 from sklearn.preprocessing import OneHotEncoder
 oneHotEncoder = OneHotEncoder(drop='first')
 oneHotEncoderFit = oneHotEncoder.fit(provincias.reshape(-1,1))
 oneHotEncoderFit.transform(provincias.reshape(-1,1)).toarray()
 ```
-* **Tratamiento valores perdidos o nulos**
+- **Tratamiento valores perdidos o nulos**
 ```python
 from sklearn.impute import SimpleImputer
 ```
-* **Division conjunto de datos**
+- **Division conjunto de datos**
 ```python
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(data, y, train_size = 0.8, random_state = 1234)
+```
+- **Feedforward Iterativo** 
+```python
+#W weights, X input, A! activation of Hidden layer, G function 
+for j in range(len(A1))
+  for i in range(len(X))
+    A1[j] = W[j,i]*X[i]
+  A1[j]=g(A1[j])
+#Same for A2, A3.... An
+```
+- **Feedforward Iterativo con Biases** 
+```python
+#W weights, X input, A! activation of Hidden layer, G function, b biases of layer 0 to layer 1 
+for j in range(len(A1))
+  for i in range(len(X))
+    A1[j] = W[j,i]*X[i] + b[i]
+  A1[j]=g(A1[j])
+#Same for A2, A3.... An
 ```
