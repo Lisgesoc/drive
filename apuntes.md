@@ -24,6 +24,15 @@
 * 4.3 Sistemas Emergentes (Hormigas y Enjambres)
 * 4.4 Clasificación de la Computación Evolutiva como Agente
 
+### Tema 5: Aprendizaje Automático (Machine Learning)
+* 5.1 Preparación y Preprocesamiento de Datos
+* 5.2 Aprendizaje Supervisado
+* 5.3 Aprendizaje No Supervisado
+* 5.4 Aprendizaje Profundo (Deep Learning)
+* 5.5 Aprendizaje por Refuerzo
+* 5.6 Criterios de Selección de Algoritmos (Guía de Resolución de Casos)
+* 5.7 Posibles combinaciones y ejemplos
+
 ---
 
 
@@ -289,7 +298,7 @@ Estrategias aplicadas a sistemas multiagente competitivos donde las acciones de 
 ##### - Poda Alfa-Beta
 - Optimización directa que permite descartar ramas completas del árbol Minimax sin necesidad de examinarlas, reduciendo drásticamente el exponente temporal.
 - Utiliza dos variables de control actualizadas dinámicamente:
-- Criterio de poda: Si en cualquier punto de la exploración el valor de un nodo en una rama es peor que el rango determinado por $[\alpha, \beta]$, esa sub-rama se corta (*poda*) porque un jugador racional nunca elegirá ese camino.
+- Criterio de poda: Si en cualquier punto de la exploración el valor de un nodo en una rama es peor que el rango determinado esa subrama se corta.
 
 ## **Tema 4 Sistemas Bio-inspirados**
 - **Definición**: Rama de la IA que resuelve problemas complejos de optimización. Inspirada en la evolucion biologica
@@ -352,7 +361,7 @@ Sistemas complejos compuestos por multitud de agentes con reglas de comportamien
 - **Evolución**: Agentes que aprenden (aprendizaje no supervisado). El algoritmo refina y descubre de manera autónoma las reglas óptimas del espacio de soluciones guiándose exclusivamente por la función de fitness.
 - **Interacción**: Sistemas multiagente de colaboración coordinada (en hormigas y enjambres) donde la comunicación es indirecta y se realiza por señales mediante la alteración del medio (rastros de feromonas).
 
-## Tema 5: Aprendizaje Automático (Machine Learning)
+## **Tema 5: Aprendizaje Automático (Machine Learning)**
 
 ### 5.1 Preparación y Preprocesamiento de Datos
 El tratamiento previo de los datos es un requisito indispensable antes de la aplicación de cualquier modelo predictivo, especialmente en problemas de clasificación tabular.
@@ -363,6 +372,15 @@ El tratamiento previo de los datos es un requisito indispensable antes de la apl
   - **Label Encoding:** Aplicable a variables ordinales que sí poseen una jerarquía clara (ej. nivel de actividad física: baja=0, media=1, alta=2).
 - **Gestión del Ruido y Normalización:** Estandarizar o normalizar los datos es obligatorio para que todas las variables tengan el mismo peso matemático, especialmente si se van a utilizar Redes Neuronales o métodos basados en el cálculo de distancias.
 
+#### Metricas de rendimiento
+- Categoricos:
+    - **Recall**: falsos negativos. Maximizar si no debemos dejar escapar a nadie.
+    - **Precision**: falsos positivos. Maximizar si una falsa alarma es critica.
+    - **F1-Score**: Metrica balanceada. 
+    - En la matriz de confusion las filas son las etiquetas y las columnas las respuestas del modelo.
+- Numericos:
+    - **Error Absoluto Medio**: Calcula la media de diferencias entre error y realidad
+    - **Error Cuadratico Medio**: Calcula la media de diferencias pero elevando al cuadrado (Mayor peso para errores grandes)
 ### 5.2 Aprendizaje Supervisado
 Aplicable cuando se dispone de un histórico de datos etiquetados (se conoce la solución previa) con el fin de predecir valores continuos (regresión) o categorías (clasificación).
 
@@ -374,7 +392,8 @@ Aplicable cuando se dispone de un histórico de datos etiquetados (se conoce la 
 ### 5.3 Aprendizaje No Supervisado
 Aplicable cuando se dispone de datos brutos sin etiquetar. El objetivo es descubrir estructuras subyacentes o patrones ocultos de forma autónoma.
 
-- **Clustering (K-Means y Jerárquico):** Agrupa los elementos basándose en la similitud geométrica de sus características. Es la solución estándar cuando se pide clasificar elementos sin conocer las categorías previas.
+- **Clustering (K-Means):** Agrupa los elementos basándose en la similitud geométrica de sus características. Es la solución estándar cuando se pide clasificar elementos sin conocer las categorías previas. **Tecnica visual del codo** para elegir la k, o calcular el coeficiente de **Silouett**
+- **Jerarquico o aglomerativo**: Construye un arbol jerarquico de grupos similares y puedes visualizarlo antes de decidir el numero de grupos (K) 
 - **Reducción de Dimensionalidad (PCA):** Algoritmos diseñados para simplificar conjuntos de datos masivos eliminando información redundante, paso previo habitual para evitar el colapso por exceso de variables.
 
 ### 5.4 Aprendizaje Profundo (Deep Learning)
@@ -387,6 +406,13 @@ Subcampo necesario cuando el volumen de datos es inmenso y su naturaleza es no e
 - **Redes Neuronales Convolucionales (CNN):** Imprescindibles para el procesamiento espacial (imágenes o frames individuales). Extraen características visuales (texturas, bordes) mediante la aplicación jerárquica de filtros.
 - **Redes Neuronales Recurrentes (RNN y LSTM):** Diseñadas para procesar datos secuenciales o temporales. La variante LSTM (Long Short-Term Memory) soluciona el problema del desvanecimiento del gradiente, evitando que la red olvide información crucial del inicio de la secuencia.
 - **Autoencoders:** Redes utilizadas para comprimir la información copiando la entrada en la salida. Útiles para la reducción avanzada de dimensionalidad o la limpieza de ruido en imágenes.
+
+#### Capas
+- **Fully Conected** o **Capa Densa**: Conectada con todo antes y despues, y funcion asamblea. (Perceptron)
+- **Convolucional**: Desplaza una ventana por encima de los datos aplicando un filto matematico para obtener informacion de bloques de datos aisaldos. (Procesado de imagenes)
+- **Pooling** o **Submuestreo**: Se queda con las maximas variaciones de subconjuntos de datos, uso comun con las convolucionales. Ahorra ram descartando datos menos importantes.
+- **Recurrentes**: Contienen estado interno oculto que se actualiza. LSTM para recordar cosas pasadas lejanas descartando datos no importantes (Ahorra RAM). Para tratamiento de datos que varian con el tiempo(Videos, audios, texto)
+- **Dropout** o **Regularizacion**: Para evitar el sobre-ajuste apaga aleatoriamente un porcentaje de las neuronas   
 
 ### 5.5 Aprendizaje por Refuerzo
 Aplicable en entornos dinámicos y desconocidos donde no existe un dataset previo. El modelo aprende "online" mediante la interacción.
@@ -401,6 +427,10 @@ Para el diseño de sistemas inteligentes en casos prácticos, la elección del a
 - **Restricción de Ausencia de Etiquetas:** Exige aprendizaje no supervisado por agrupación geométrica (K-Means).
 - **Restricción de Datos Complejos (Multimedia):** Exige arquitecturas profundas (CNN para espacio, LSTM para tiempo).
 
+### 5.7 Posibles combinaciones y ejemplos
+- **Compresion + Predicción**: Modelo extractor de caracteristicas (PCA, CNN, Autoencoder) + Modelo que decida
+- **Visual + Secuencial**: Modelo extractor de caracteristicas por elemento de la secuencia (CNN) + modelo contextual que recuerda (RNN, LSTM)
+- **No supervisado + Supervisado**: Modelo que organice y clasifique las entradas del dataset (K-mean) + Modelo supervisado entrenado exclusivamente para cada grupo extraido (Randmo Forest) 
 
 ## **Anexo I: Índice de Consulta Rápida para el Examen**
 
@@ -416,6 +446,16 @@ Para el diseño de sistemas inteligentes en casos prácticos, la elección del a
 - **Adaptar un puzle ante un rival por turnos (Suma cero / Minimax / Poda Alfa-Beta)** ==> Consultar 3.5
 - **Justificar la elección de IA Simbólica (Top-Down) vs IA Subsimbólica (Bottom-Up)** ==> Consultar 1.2
 - **Clasificar un algoritmo genético, evolutivo o bio-inspirado como tipo de agente** ==> Consultar 4.4
+- **Limpiar, codificar y normalizar un conjunto de datos tabulares antes del modelado** ==> Consultar 5.1
+- **Elegir entre One-Hot Encoding o Label Encoding para variables categóricas** ==> Consultar 5.1
+- **Seleccionar la métrica adecuada: Precision, Recall, F1-Score o MSE según el contexto** ==> Consultar 5.1
+- **Elegir entre árboles de decisión, KNN, SVM, Random Forest o Redes Neuronales para clasificación** ==> Consultar 5.2
+- **Aplicar regresión lineal y calcular MAE, MSE y R² para evaluar el modelo** ==> Consultar 5.2
+- **Agrupar datos sin etiquetas mediante K-Means, clustering jerárquico o PCA** ==> Consultar 5.3
+- **Detectar el número óptimo de clusters mediante el método del codo o silueta** ==> Consultar 5.3
+- **Seleccionar CNN para procesamiento de imágenes o LSTM para datos secuenciales** ==> Consultar 5.4
+- **Entrenar un agente mediante Q-Learning en un entorno dinámico desconocido** ==> Consultar 5.5
+- **Combinar técnicas: compresión + predicción, o no supervisado + supervisado** ==> Consultar 5.6 y 5.7
 
 ## **Anexo II: Codificar**
 
